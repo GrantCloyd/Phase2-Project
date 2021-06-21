@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react"
 import Thumbnail from "./Thumbnail"
 
 export default function Featured() {
-   const [featured, setFeatured] = useState([])
+   const [featured, setFeatured] = useState
+   ([])
 
    // Add Date object to get today's date
    const myDate = new Date()
@@ -18,7 +19,7 @@ export default function Featured() {
       ("0" + myDate.getDate()).slice(-2)
 
    let featuredArray = featured.map(featureItem => {
-      return <Thumbnail key={featureItem.id} item={featureItem} />
+      return <Thumbnail key={featureItem.id} item={featureItem._embedded.show} />
    })
 
    useEffect(() => {

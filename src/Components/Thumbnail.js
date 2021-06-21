@@ -1,25 +1,29 @@
-import React from "react"
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Thumbnail({
-   item: {
-      _embedded: {
-         show: {
-            id,
-            name,
-            image: { medium },
-            genres,
-            rating: { average },
-            runtime,
-            summary,
-         },
-      },
-   },
-}) {
+   item: { externals, name, image, genres, rating, runtime, summary }
+}) 
+{
+   let pathname = "";
+
+   externals.thetvdb ? pathname = "show/" + externals.thetvdb : pathname = "error/404";
+   
    return (
-      <div>
-         <img alt={name} src={medium} />
-         <h4>{name}</h4>
-         {average ? <p>{average}</p> : null}
-      </div>
+      <Link to={`/${pathname}`}>
+         <div>
+            <img
+               alt={name}
+               src={
+                  image !== null
+                     ? image.medium
+                     : "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg"
+               }
+            />
+            <h4>{name}</h4>
+            {rating.average ? <p>{rating.average}</p> : null}
+         </div>
+      </Link>
+      
    )
 }
