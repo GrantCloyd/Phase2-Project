@@ -7,14 +7,14 @@ export default function Header() {
       <header>
          <h1>FlatFlix</h1>
          <p>Design Logo Here</p>
-         <navbar>
+         <nav>
             <ul>
                <li>Home</li>
                <li>Discover</li>
                <li>Favorites</li>
             </ul>
             <hr />
-         </navbar>
+         </nav>
       </header>
    )
 }
