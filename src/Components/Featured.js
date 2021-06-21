@@ -1,36 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import Thumbnail from "./Thumbnail";
+import React, { useState, useEffect } from "react"
+import Thumbnail from "./Thumbnail"
 
 export default function Featured() {
-    const [featured, setFeatured] = useState([]);
+   const [featured, setFeatured] = useState([])
 
-    // Add Date object to get today's date
-    const myDate = new Date();
-    let myDateString = "";
+   // Add Date object to get today's date
+   const myDate = new Date()
+   let myDateString = ""
 
-    myDate.setDate(myDate.getDate() + 20);
+   myDate.setDate(myDate.getDate() + 20)
 
-    myDateString = myDate.getFullYear() + '-' + ('0' + (myDate.getMonth()+1)).slice(-2) + '-' + ('0' + myDate.getDate()).slice(-2); 
+   myDateString =
+      myDate.getFullYear() +
+      "-" +
+      ("0" + (myDate.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + myDate.getDate()).slice(-2)
 
-    let featuredArray = featured.map(featureItem => {
-        return <Thumbnail key={featureItem.id} item={featureItem} />
-    })
+   let featuredArray = featured.map(featureItem => {
+      return <Thumbnail key={featureItem.id} item={featureItem} />
+   })
 
-    useEffect(() => {
-        fetch(`http://api.tvmaze.com/schedule/web?date=${myDateString}&country=US`)
-            .then(res => res.json())
-            .then(data => {
-                setFeatured(data);
-            });
-    }, [])
+   useEffect(() => {
+      fetch(`http://api.tvmaze.com/schedule/web?date=${myDateString}&country=US`)
+         .then(res => res.json())
+         .then(data => {
+            setFeatured(data)
+         })
+   }, [myDateString])
 
-    return (
-        <div>
-            <h4>Featured Today</h4>
-            {featuredArray}
-            <p>Show component here</p>
-            <p>Show component here</p>
-        </div>
-    )
+   return (
+      <div>
+         <h4>Featured Today</h4>
+         {featuredArray}
+         <p>Show component here</p>
+         <p>Show component here</p>
+      </div>
+   )
 }
-
