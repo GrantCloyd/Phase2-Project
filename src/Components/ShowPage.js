@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext} from "react"
 import { useParams, useHistory } from "react-router-dom"
 import Review from "./Review";
+import { Context } from "../context/Context";
 
-export default function ShowPage({ handleFavorite, favorites }) {
+export default function ShowPage() {
    const initialShow = {
       name: "",
       image: "",
@@ -11,6 +12,8 @@ export default function ShowPage({ handleFavorite, favorites }) {
       summary: "",
       genres: [],
    }
+
+   const {handleFavorite, favorites} = useContext(Context)
 
    const [reviews, setReviews] = useState([]);
 

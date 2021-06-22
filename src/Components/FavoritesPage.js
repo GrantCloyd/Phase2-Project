@@ -1,7 +1,10 @@
-import React from "react"
+import React, {useContext} from "react"
 import Thumbnail from "./Thumbnail"
+import { Context } from "../context/Context"
 
-export default function FavoritesPage({ favorites, handleFavorite }) {
+export default function FavoritesPage() {
+
+   const {favorites, handleFavorite}= useContext(Context)
    console.log(favorites)
    const favThumbnails = favorites.map(favorite => (
       <Thumbnail

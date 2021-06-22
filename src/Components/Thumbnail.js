@@ -1,13 +1,18 @@
-import React from "react"
+import React, {useContext} from "react"
 import { Link } from "react-router-dom"
+import { Context } from "../context/Context"
 
 export default function Thumbnail({
    item: { externals, name, image, genres, rating, runtime, summary },
    item,
-   favorites,
-   handleFavorite,
+   // favorites,
+   // handleFavorite,
 }) {
    let pathname = ""
+
+   const {favorites, handleFavorite} = useContext(Context)
+
+   // console.log(context)
 
    let favoriteStatus = favorites.find(favorite => favorite.id === item.id) === undefined
 

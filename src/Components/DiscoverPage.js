@@ -4,7 +4,7 @@ import Thumbnail from "./Thumbnail"
 //useEffect that gets initial data of some specified type that renders first set of Lis
 //subsequent searches will change intitial LIs to searched for Lis
 
-export default function DiscoverPage({ handleFavorite, favorites }) {
+export default function DiscoverPage() {
    const [shows, setShows] = useState([])
    const [querySearch, setQuerySearch] = useState("")
 
@@ -13,8 +13,7 @@ export default function DiscoverPage({ handleFavorite, favorites }) {
          <Thumbnail
             key={discoverItem.show.id}
             item={discoverItem.show}
-            handleFavorite={handleFavorite}
-            favorites={favorites}
+            
          />
       )
    })
