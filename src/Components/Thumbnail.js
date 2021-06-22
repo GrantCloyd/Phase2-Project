@@ -1,17 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 
 export default function Thumbnail({
-   item: { externals, name, image, genres, rating, runtime, summary }
-}) 
-{
-   let pathname = "";
+   item: { externals, name, image, genres, rating, runtime, summary },
+   item,
+   favorites,
+   handleFavorite,
+}) {
+   let pathname = ""
 
-   externals.thetvdb ? pathname = "show/" + externals.thetvdb : pathname = "error/404";
-   
+   let favoriteStatus = favorites.find(favorite => favorite.id === item.id) === undefined
+
+   externals.thetvdb ? (pathname = "show/" + externals.thetvdb) : (pathname = "error/404")
+
    return (
-      <Link to={`/${pathname}`}>
-         <div>
+      <div>
+         <Link to={`/${pathname}`}>
             <img
                alt={name}
                src={
@@ -22,8 +26,10 @@ export default function Thumbnail({
             />
             <h4>{name}</h4>
             {rating.average ? <p>{rating.average}</p> : null}
-         </div>
-      </Link>
-      
+         </Link>
+         <button onClick={() => handleFavorite(item)}>
+            {favoriteStatus ? "☆ Favorite" : "⭐️ Remove"}
+         </button>
+      </div>
    )
 }

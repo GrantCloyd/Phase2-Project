@@ -25,9 +25,9 @@ export default function Header() {
                anchorEl={ref.current}
                open={isOpen}
                onClose={() => setIsOpen(false)}>
-               <NavLink to="/">
-                  <MenuItem>Home</MenuItem>
-               </NavLink>
+               <MenuItem>
+                  <NavLink to="/">Home</NavLink>
+               </MenuItem>
 
                <MenuItem>
                   <NavLink to="/discover">Discover</NavLink>
