@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useParams, useHistory } from "react-router-dom"
+import Review from "./Review";
 
 export default function ShowPage({ handleFavorite, favorites }) {
    const initialShow = {
@@ -9,6 +10,21 @@ export default function ShowPage({ handleFavorite, favorites }) {
       runtime: "",
       summary: "",
       genres: [],
+   }
+
+   const [reviews, setReviews] = useState([]);
+
+   const [userReview, setUserReview] = useState({
+      rating: "0",
+      comment: ""
+   })
+
+   let reviewsArray = "";
+
+   if (reviews)  {
+      reviewsArray = reviews.map(review => {
+         return <Review key={review.id} {...review} />
+      })
    }
 
    const history = useHistory()
@@ -63,6 +79,80 @@ export default function ShowPage({ handleFavorite, favorites }) {
             setShow(data)
          })
    }, [showId, setShow])
+ 
+   useEffect(() => {
+      fetch(`http://localhost:3001/reviews/${showId}`)
+         .then(res => res.json())
+         .then(data => {
+            setReviews(data.userReviews)
+         })
+   }, [showId, setReviews])
 
-   return <div>{page}</div>
+   const [reviewId, setReviewId] = useState(reviews ? reviews.length + 1 : 1);
+
+   function handleSubmitReview(e) {
+      e.preventDefault();
+
+      setReviewId(reviewId => reviewId + 1)
+
+      let configObj = {
+         method: "POST",
+         headers: {
+            "Content-Type": "application/json"
+         },
+         body: JSON.stringify({
+            id: showId,
+            userReviews: [
+               {...userReview, id: reviewId}
+            ]
+         })
+      }
+
+      if (reviews) {
+         const updatedReviews = {
+            id: showId,
+            userReviews: [
+               ...reviews, 
+               {...userReview, id: reviewId}
+            ]
+         }
+
+         configObj = {
+            method: "PATCH",
+            headers: {
+               "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedReviews)
+         }
+
+         fetch(`http://localhost:3001/reviews/${showId}`, configObj)
+         .then(res => res.json())
+         .then(data => {
+            setReviews(data.userReviews)
+         })
+      } else {
+         fetch(`http://localhost:3001/reviews/`, configObj)
+         .then(res => res.json())
+         .then(data => {
+            setReviews(data.userReviews)
+         })
+      }
+   }
+
+   return (
+      <div>
+         {page}
+         <h3>User Reviews</h3>
+         {reviewsArray}
+         <h4>Leave review</h4>
+         <form id="review" onSubmit={handleSubmitReview}>
+            <input type="number" name="rating" min="0" max="10" value={userReview.rating} 
+            onChange={e => setUserReview({...userReview, rating: e.target.value})}/>
+         </form>
+         <textarea name="comment" placeholder="Enter review here..." form="review" value={userReview.comment}
+         onChange={e => setUserReview({...userReview, comment: e.target.value})}/>
+         <br/>
+         <button form="review">Submit</button>
+      </div>
+   )
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import Thumbnail from "./Thumbnail"
 
 export default function Featured({ handleFavorite, favorites }) {
-   console.log(handleFavorite)
    const [featured, setFeatured] = useState([])
 
    // Add Date object to get today's date
