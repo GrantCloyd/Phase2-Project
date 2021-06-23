@@ -5,7 +5,6 @@ import { Context } from "../context/Context"
 export default function FavoritesPage() {
 
    const {favorites, handleFavorite}= useContext(Context)
-   console.log(favorites)
    const favThumbnails = favorites.map(favorite => (
       <Thumbnail
          key={favorite.id}

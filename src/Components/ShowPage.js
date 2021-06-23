@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext} from "react"
 import { useParams, useHistory } from "react-router-dom"
 import Review from "./Review";
 import { Context } from "../context/Context";
+import { nanoid } from "nanoid";
 
 export default function ShowPage() {
    const initialShow = {
@@ -89,14 +90,11 @@ export default function ShowPage() {
          .then(data => {
             setReviews(data.userReviews)
          })
+         .catch(() => console.log("No reviews found for this show"))
    }, [showId, setReviews])
-
-   const [reviewId, setReviewId] = useState(reviews ? reviews.length + 1 : 1);
 
    function handleSubmitReview(e) {
       e.preventDefault();
-
-      setReviewId(reviewId => reviewId + 1)
 
       let configObj = {
          method: "POST",
@@ -106,7 +104,7 @@ export default function ShowPage() {
          body: JSON.stringify({
             id: showId,
             userReviews: [
-               {...userReview, id: reviewId}
+               {...userReview, id: nanoid()}
             ]
          })
       }
@@ -116,7 +114,7 @@ export default function ShowPage() {
             id: showId,
             userReviews: [
                ...reviews, 
-               {...userReview, id: reviewId}
+               {...userReview, id: nanoid()}
             ]
          }
 
