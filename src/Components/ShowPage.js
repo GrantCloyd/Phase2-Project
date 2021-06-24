@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom"
 import Review from "./Review"
 import { Context } from "../context/Context"
 import { nanoid } from "nanoid"
-import { Button, Input, InputLabel, TextField } from "@material-ui/core"
+import { Button, Input, InputLabel, TextField, FormControl } from "@material-ui/core"
 
 export default function ShowPage() {
    const initialShow = {
@@ -81,6 +81,8 @@ export default function ShowPage() {
    const handleSubmitReview = e => {
       e.preventDefault()
 
+      console.log("inside")
+
       let configObj = {
          method: "POST",
          headers: {
@@ -127,6 +129,8 @@ export default function ShowPage() {
    let favoriteStatus = favorites.find(favorite => favorite.id === show.id) === undefined
 
    let userReviewsArr
+
+   console.log(userReview)
 
    if (reviews !== undefined && reviews.length !== 0) {
       userReviewsArr = (
@@ -187,38 +191,37 @@ export default function ShowPage() {
          {reviewsArray}
          <h4>Leave review</h4>
          <form id="review" onSubmit={handleSubmitReview}>
-            <InputLabel htmlFor="rating">Rating</InputLabel>
-            <Input
-               InputProps={{ inputProps: { min: 0, max: 10 } }}
-               variant="outlined"
-               id="rating"
-               label="Enter Rating"
-               type="number"
-               name="rating"
-               min={0}
-               max={10}
-               value={userReview.rating}
-               onChange={e => setUserReview({ ...userReview, rating: e.target.value })}
-            />
+            <FormControl>
+               <InputLabel>Rating</InputLabel>
+               <Input
+                  variant="outlined"
+                  id="rating"
+                  label="Enter Rating"
+                  type="number"
+                  name="rating"
+                  min={0}
+                  max={10}
+                  value={userReview.rating}
+                  onChange={e => setUserReview({ ...userReview, rating: e.target.value })}
+               />
 
-            <br></br>
-            <TextField
-               name="comment"
-               form="review"
-               value={userReview.comment}
-               onChange={e => setUserReview({ ...userReview, comment: e.target.value })}
-               variant="outlined"
-               id="outlined-multiline-static"
-               label="Enter Review"
-               multiline
-               rows={4}
-            />
+               <br></br>
+               <TextField
+                  name="comment"
+                  value={userReview.comment}
+                  onChange={e => setUserReview({ ...userReview, comment: e.target.value })}
+                  variant="outlined"
+                  id="comment"
+                  label="Enter Review"
+                  multiline
+                  rows={4}
+               />
+               <br />
+               <Button onClick={e => handleSubmitReview(e)} variant="contained" color="primary">
+                  Submit
+               </Button>
+            </FormControl>
          </form>
-
-         <br />
-         <Button variant="contained" color="primary" form="review">
-            Submit
-         </Button>
       </div>
    )
 }
