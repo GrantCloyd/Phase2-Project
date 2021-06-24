@@ -23,77 +23,17 @@ export default function ShowPage() {
       comment: ""
    })
 
-   let reviewsArray = "";
+   const [show, setShow] = useState(initialShow)
 
-   if (reviews)  {
-      reviewsArray = reviews.map(review => {
-         return <Review key={review.id} {...review} />
-      })
-   }
-
+   const showId = useParams().id
+   
    const history = useHistory()
 
    const handleBackButton = () => {
       history.push("/discover")
    }
 
-   const [show, setShow] = useState(initialShow)
-
-   const showId = useParams().id
-
-   let { name, image, rating, runtime, summary, genres } = show
-   let favoriteStatus = favorites.find(favorite => favorite.id === show.id) === undefined
-
-   const genresArray = genres.map(genre => <p key={genre}>{genre}</p>)
-
-   let page = (
-      <div>
-         <h2>404: Page Not Found</h2>
-      </div>
-   )
-
-   if (show !== null) {
-      page = (
-         <div>
-            <img
-               alt={name}
-               src={
-                  image !== null
-                     ? image.medium
-                     : "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg"
-               }
-            />
-            <h4>{name}</h4>
-            {rating.average ? <p>{rating.average}</p> : null}
-            {genresArray}
-            <p>{runtime + " minutes"}</p>
-            <div dangerouslySetInnerHTML={{ __html: summary }} />
-            <button onClick={() => handleFavorite(show)}>
-               {favoriteStatus ? "✩ Favorite" : "✭ Remove"}
-            </button>
-            <button onClick={handleBackButton}> ⏪ Back</button>
-         </div>
-      )
-   }
-
-   useEffect(() => {
-      fetch(`http://api.tvmaze.com/lookup/shows?thetvdb=${showId}`)
-         .then(res => res.json())
-         .then(data => {
-            setShow(data)
-         })
-   }, [showId, setShow])
- 
-   useEffect(() => {
-      fetch(`http://localhost:3001/reviews/${showId}`)
-         .then(res => res.json())
-         .then(data => {
-            setReviews(data.userReviews)
-         })
-         .catch(() => console.log("No reviews found for this show"))
-   }, [showId, setReviews])
-
-   function handleSubmitReview(e) {
+   const handleSubmitReview = e => {
       e.preventDefault();
 
       let configObj = {
@@ -139,6 +79,87 @@ export default function ShowPage() {
          })
       }
    }
+
+   let { name, image, rating, runtime, summary, genres } = show
+
+   let reviewsArray = "";
+
+   if (reviews)  {
+      reviewsArray = reviews.map(review => {
+         return <Review key={review.id} {...review} />
+      })
+   }
+
+   const genresArray = genres.map(genre => <h4 key={genre}>{genre}</h4>)
+
+   let favoriteStatus = favorites.find(favorite => favorite.id === show.id) === undefined
+   
+   let page = (
+      <div>
+         <h2>404: Page Not Found</h2>
+      </div>
+   )
+   
+   if (show !== null) {
+      page = (
+         <div>
+            <img
+               alt={name}
+               src={
+                  image !== null
+                     ? image.medium
+                     : "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg"
+               }
+            />
+            <h3>{name}</h3>
+            {rating.average ? <p><strong>Critic Rating: </strong>{rating.average} out of 10</p> : null}
+            <p><strong>User Rating: </strong>7 out of 10</p>
+            {genresArray}
+            <h4>{runtime + " minutes"}</h4>
+            <div dangerouslySetInnerHTML={{ __html: summary }} />
+            <button onClick={() => handleFavorite(show)}>
+               {favoriteStatus ? "♡ Favorite" : "♥ Remove"}
+            </button>
+            <button onClick={handleBackButton}> ⏪ Back</button>
+         </div>
+      )
+   }
+
+   useEffect(() => {
+      fetch(`http://api.tvmaze.com/lookup/shows?thetvdb=${showId}`)
+         .then(res => res.json())
+         .then(data => {
+            if (data === null) {
+               return fetch(`http://api.tvmaze.com/lookup/shows?imdb=${showId}`)
+                  .then(info => info.json())
+                  .then(output => {
+                     if (output === null) {
+                        return fetch(`http://api.tvmaze.com/lookup/shows?tvrage=${showId}`)
+                           .then(detail => detail.json())
+                           .then(d => setShow(d))
+                     }
+
+                     setShow(output);
+                  })
+            }
+
+            if (data.externals.thetvdb.toString() !== showId) {
+               return fetch(`http://api.tvmaze.com/lookup/shows?tvrage=${showId}`)
+                           .then(detail => detail.json())
+                           .then(d => setShow(d))
+            }
+
+            setShow(data)
+         })
+   }, [showId, setShow])
+ 
+   useEffect(() => {
+      fetch(`http://localhost:3001/reviews?id=${showId}`)
+         .then(res => res.json())
+         .then(data => {
+            setReviews(data.userReviews)
+         })
+   }, [showId, setReviews])
 
    return (
       <div>

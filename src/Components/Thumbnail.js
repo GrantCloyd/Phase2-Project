@@ -16,7 +16,16 @@ export default function Thumbnail({
 
    let favoriteStatus = favorites.find(favorite => favorite.id === item.id) === undefined
 
-   externals.thetvdb ? (pathname = "show/" + externals.thetvdb) : (pathname = "error/404")
+   externals.thetvdb ? 
+      (pathname = "show/" + externals.thetvdb) 
+   : 
+      (externals.imdb ? 
+         (pathname = "show/" + externals.imdb) 
+      : 
+         externals.tvrage ? 
+            (pathname = "show/" + externals.tvrage)
+         :
+            (pathname = "error/404"));
 
    return (
       <div>
@@ -30,11 +39,13 @@ export default function Thumbnail({
                }
             />
             <h4>{name}</h4>
-            {rating.average ? <p>{rating.average}</p> : null}
          </Link>
+         {rating.average ? <p>⭐️&nbsp;&nbsp;{rating.average}</p> : null}
          <button onClick={() => handleFavorite(item)}>
-            {favoriteStatus ? "☆ Favorite" : "⭐️ Remove"}
+            {favoriteStatus ? "♡ Favorite" : "♥ Remove"}
          </button>
+         <br/>
+         <br/>
       </div>
    )
 }

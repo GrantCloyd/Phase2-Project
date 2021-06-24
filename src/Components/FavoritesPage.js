@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import Thumbnail from "./Thumbnail"
 import { Context } from "../context/Context"
-import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts"
+import { PieChart, Pie, Legend, Cell, Tooltip, ResponsiveContainer } from "recharts"
 
 export default function FavoritesPage() {
    const { favorites, handleFavorite } = useContext(Context)
@@ -14,24 +14,38 @@ export default function FavoritesPage() {
          catchGenresObj[genre] ? ++catchGenresObj[genre] : (catchGenresObj[genre] = 1)
       }
    }
-   const generateGenres = () => {
-      let arr = []
-      for (let genre in catchGenresObj) {
-         arr.push(<p key={genre}>{genre + ": " + catchGenresObj[genre]}</p>)
-      }
-      return arr
+
+   let dataTest = [];
+
+   for (let genre in catchGenresObj) {
+      dataTest.push({
+         name: genre,
+         value: catchGenresObj[genre]
+      })
    }
+
+   // const generateGenres = () => {
+   //    let arr = []
+   //    for (let genre in catchGenresObj) {
+   //       arr.push(<p key={genre}>{genre + ": " + catchGenresObj[genre]}</p>)
+   //    }
+   //    return arr
+   // }
 
    let runtimeArr = []
    let averageRatingArr = []
 
    if (favorites.length !== 0) {
+      let filteredRuntime = favorites.filter(item => item.runtime);
+
       runtimeArr =
-         favorites.map(favorite => favorite.runtime).reduce((a, b) => a + b) / favorites.length
+         filteredRuntime.map(favorite => favorite.runtime).reduce((a, b) => a + b) / filteredRuntime.length
+
+      let filteredRating = favorites.filter(item => item.rating.average);
 
       averageRatingArr =
-         favorites.map(favorite => favorite.rating.average).reduce((a, b) => a + b) /
-         favorites.length
+         filteredRating.map(favorite => favorite.rating.average).reduce((a, b) => a + b) /
+         filteredRating.length
    }
 
    // console.log(averageRatingArr)
@@ -45,21 +59,51 @@ export default function FavoritesPage() {
       />
    ))
 
-   let dataTest = [
-      { name: "Horror", value: 5 },
-      { name: "Drama", value: 3 },
-   ]
+   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#F1948A', "#BFC9CA", "#BB8FCE", "#E74C3C"];
+
+   const RADIAN = Math.PI / 180;
+   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, name, index }) => {
+      const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+      const x = cx + radius * Math.cos(-midAngle * RADIAN);
+      const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+      return (
+         <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+            {`${(percent * 100).toFixed(0)}%`}
+         </text>
+      );
+   };
 
    return (
       <div>
          <h2>Favorites</h2>
          <h3>Favorite Shows</h3>
          {favThumbnails}
-         <h3>Breadown of characteristics of fav shows</h3>
+         <h3>Breakdown of characteristics of fav shows</h3>
          <h4> Genres</h4>
-         <p>Your Favorites </p>
-         {generateGenres()}
-         <PieChart width={730} height={500}>
+         <ResponsiveContainer width="90%" height={475}>
+            <PieChart width={400} height={400}>
+               <Pie
+                  data={dataTest}
+                  cx="60%"
+                  cy="50%"
+                  labelLine={false}
+                  label={renderCustomizedLabel}
+                  outerRadius={200}
+                  fill="#8884d8"
+                  dataKey="value"
+                  nameKey="name"
+               >
+                  {dataTest.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+               </Pie>
+               <Tooltip/>
+               <Legend layout="vertical" verticalAlign="middle" align="right" height={36}/>
+            </PieChart>
+         </ResponsiveContainer>
+
+         {/* <PieChart width={730} height={500}>
             <Pie
                data={dataTest}
                dataKey="value"
@@ -69,11 +113,11 @@ export default function FavoritesPage() {
                outerRadius={50}
                fill="#8884d8"
             />
-         </PieChart>
+         </PieChart> */}
 
-         <p> Shows by released</p>
-         <p> Your average show runtime: {runtimeArr} min</p>
-         <p>Your average show's critical rating : {averageRatingArr}</p>
+         {/* <h4> Shows by released</h4> */}
+         <h4> Your average show runtime: {runtimeArr.length !== 0 ? runtimeArr.toFixed(0) : null} min</h4>
+         <h4>Your average show's critical rating : {averageRatingArr.length !== 0 ? averageRatingArr.toFixed(2) : null}</h4>
       </div>
    )
 }

@@ -17,8 +17,6 @@ export default function Featured() {
       "-" +
       ("0" + myDate.getDate()).slice(-2);
 
-   console.log(myDateString);
-
    let featuredArray = featured.map(featureItem => {
       return (
          <Thumbnail
@@ -40,8 +38,6 @@ export default function Featured() {
       <div>
          <h4>Featured Today</h4>
          {featuredArray}
-         <p>Show component here</p>
-         <p>Show component here</p>
       </div>
    )
 }
