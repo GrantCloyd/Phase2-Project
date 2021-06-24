@@ -106,7 +106,7 @@ export default function FavoritesPage() {
          <Grid container spacing={3}>
             {favThumbnails}
          </Grid>
-         <h3>Breakdown of characteristics of fav shows</h3>
+         <h3>Breakdown of characteristics of your favorite shows</h3>
          <h4> Genres</h4>
          <ResponsiveContainer width="97%" height={475}>
             <PieChart width={400} height={400}>

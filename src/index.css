@@ -29,7 +29,7 @@ li {
 .showImage {
    width: 200px;
    height: 300px;
-   border-radius: 10px;
+   border-radius: 7px;
 }
 
 #logo {
@@ -40,7 +40,7 @@ li {
 }
 
 #footerSection {
-   height: 75px;
+   height: 100px;
    width: 100%;
    /* object-position: 50% 0%;
    object-fit: cover; */
@@ -71,6 +71,8 @@ li {
 
 .span {
    text-align: center;
+   position: relative;
+   right: 29px;
 }
 
 .span h4 {
@@ -89,4 +91,9 @@ li {
 .MuiButtonBase-root.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
    background-color: rgb(248, 191, 69);
    color: black;
+}
+
+.summary {
+   width: 80%; 
+   margin: auto;
 }

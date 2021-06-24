@@ -16,15 +16,17 @@ export default function ShowPage() {
       genres: [],
    }
 
+   const initialReview = {
+      rating: "0",
+      reviewTitle: "",
+      comment: ""
+   }
+
    const { handleFavorite, favorites } = useContext(Context)
 
    const [reviews, setReviews] = useState([])
 
-   const [userReview, setUserReview] = useState({
-      rating: "0",
-      reviewTitle: "",
-      comment: ""
-   })
+   const [userReview, setUserReview] = useState(initialReview)
 
    let reviewsArray = ""
 
@@ -41,7 +43,7 @@ export default function ShowPage() {
    const history = useHistory()
 
    const handleBackButton = () => {
-      history.push("/discover")
+      history.goBack()
    }
 
    useEffect(() => {
@@ -79,6 +81,20 @@ export default function ShowPage() {
             setReviews(data.userReviews)
          })
    }, [showId, setReviews])
+
+   // useEffect(() => {
+   //    let viewedHistory = [...localStorage.getItem("viewed")];
+
+   //    console.log(viewedHistory);
+
+   //    if (show !== initialShow && (viewedHistory.length === 0 || viewedHistory.find(historyItem => historyItem === show) !== show)) {
+   //       console.log(show);
+   //       viewedHistory.push({hi: "hi"});
+   //       localStorage.setItem("viewed", viewedHistory);
+   //    }
+
+   //    console.log(2, viewedHistory)
+   // }, [show])
 
    const handleSubmitReview = e => {
       e.preventDefault()
@@ -120,11 +136,13 @@ export default function ShowPage() {
                setReviews(data.userReviews)
             })
       }
+
+      setUserReview(initialReview);
    }
 
    let { name, image, rating, runtime, summary, genres } = show
 
-   const genresArray = genres.map(genre => <h4 key={genre}>{genre}</h4>)
+   const genresArray = <h4>{genres.join(", ")}</h4>;
 
    let favoriteStatus = favorites.find(favorite => favorite.id === show.id) === undefined
 
@@ -148,7 +166,7 @@ export default function ShowPage() {
          <div>
             <Button variant="contained" color="primary" onClick={handleBackButton}>
                {" "}
-               Back to Discover
+               Back
             </Button>
             <br />
             <br />
@@ -174,7 +192,7 @@ export default function ShowPage() {
             </p>
             {genresArray}
             <h4>{runtime + " minutes"}</h4>
-            <div dangerouslySetInnerHTML={{ __html: summary }} />
+            <div className="summary" dangerouslySetInnerHTML={{ __html: summary }} />
             <Button variant="contained" color="primary" onClick={() => handleFavorite(show)}>
                {favoriteStatus ? "♡ Favorite" : "♥ Remove"}
             </Button>
@@ -206,7 +224,7 @@ export default function ShowPage() {
                <br></br>
                <TextField
                   name="reviewTitle"
-                  value={userReview.title}
+                  value={userReview.reviewTitle}
                   onChange={e => setUserReview({ ...userReview, reviewTitle: e.target.value })}
                   variant="outlined"
                   id="reviewTitle"

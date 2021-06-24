@@ -6,9 +6,12 @@ import FavoritesPage from "./Components/FavoritesPage"
 import ShowPage from "./Components/ShowPage"
 import { Route, Switch } from "react-router-dom"
 import {ContextProvider } from "./context/Context"
+import { useEffect } from "react";
 
 function App() {
-  
+   useEffect(() => {
+      localStorage.setItem("viewed", [])
+   }, [])
 
    return (
       <div className="App">
