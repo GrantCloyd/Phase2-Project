@@ -4,6 +4,7 @@ import Review from "./Review"
 import { Context } from "../context/Context"
 import { nanoid } from "nanoid"
 import { Button, Input, InputLabel, TextField, FormControl } from "@material-ui/core"
+// import { withStyles } from '@material-ui/core/styles';
 
 export default function ShowPage() {
    const initialShow = {
@@ -21,7 +22,8 @@ export default function ShowPage() {
 
    const [userReview, setUserReview] = useState({
       rating: "0",
-      comment: "",
+      reviewTitle: "",
+      comment: ""
    })
 
    let reviewsArray = ""
@@ -81,8 +83,6 @@ export default function ShowPage() {
    const handleSubmitReview = e => {
       e.preventDefault()
 
-      console.log("inside")
-
       let configObj = {
          method: "POST",
          headers: {
@@ -130,14 +130,11 @@ export default function ShowPage() {
 
    let userReviewsArr
 
-   console.log(userReview)
-
    if (reviews !== undefined && reviews.length !== 0) {
       userReviewsArr = (
          reviews.map(review => review.rating).reduce((a, b) => Number(a) + Number(b)) /
          reviews.length
       ).toFixed(1)
-      console.log(userReviewsArr)
    }
 
    let page = (
@@ -151,11 +148,12 @@ export default function ShowPage() {
          <div>
             <Button variant="contained" color="primary" onClick={handleBackButton}>
                {" "}
-               ⏪ Back to Discover
+               Back to Discover
             </Button>
             <br />
             <br />
             <img
+               className="showImage"
                alt={name}
                src={
                   image !== null
@@ -167,12 +165,12 @@ export default function ShowPage() {
             {rating.average ? (
                <p>
                   <strong>Critic Rating: </strong>
-                  {rating.average} out of 10
+                  ⭐️ &nbsp;{rating.average} 
                </p>
             ) : null}
             <p>
                {userReviewsArr ? <strong>User Rating:</strong> : null}{" "}
-               {userReviewsArr ? userReviewsArr + " out of 10" : "No User Ratings"}{" "}
+               {userReviewsArr ? "⭐️  " + userReviewsArr : "No User Ratings"}{" "}
             </p>
             {genresArray}
             <h4>{runtime + " minutes"}</h4>
@@ -189,6 +187,7 @@ export default function ShowPage() {
          {page}
          <h3>User Reviews</h3>
          {reviewsArray}
+         <hr/>
          <h4>Leave review</h4>
          <form id="review" onSubmit={handleSubmitReview}>
             <FormControl>
@@ -204,7 +203,15 @@ export default function ShowPage() {
                   value={userReview.rating}
                   onChange={e => setUserReview({ ...userReview, rating: e.target.value })}
                />
-
+               <br></br>
+               <TextField
+                  name="reviewTitle"
+                  value={userReview.title}
+                  onChange={e => setUserReview({ ...userReview, reviewTitle: e.target.value })}
+                  variant="outlined"
+                  id="reviewTitle"
+                  label="Enter Title"
+               />
                <br></br>
                <TextField
                   name="comment"

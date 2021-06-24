@@ -108,11 +108,11 @@ export default function FavoritesPage() {
          </Grid>
          <h3>Breakdown of characteristics of fav shows</h3>
          <h4> Genres</h4>
-         <ResponsiveContainer width="90%" height={475}>
+         <ResponsiveContainer width="97%" height={475}>
             <PieChart width={400} height={400}>
                <Pie
                   data={dataTest}
-                  cx="60%"
+                  cx="50%"
                   cy="50%"
                   labelLine={false}
                   label={renderCustomizedLabel}
@@ -148,8 +148,8 @@ export default function FavoritesPage() {
          </h4>
          <h4>
             Your average show's critical rating :{" "}
-            {averageRatingArr.length !== 0 ? averageRatingArr.toFixed(1) : null}
+            {averageRatingArr.length !== 0 ? "⭐️ " + averageRatingArr.toFixed(1) : null}
          </h4>
-      </div>
+      </div>  
    )
 }

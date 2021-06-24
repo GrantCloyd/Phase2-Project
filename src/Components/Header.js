@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react"
 //for use with Links
 import { NavLink } from "react-router-dom"
-import { Menu, MenuItem, Button } from "@material-ui/core"
+import { Icon, Menu, MenuItem, Button } from "@material-ui/core"
+import MenuIcon from '@material-ui/icons/Menu';
 
 export default function Header() {
    const [isOpen, setIsOpen] = useState(false)
@@ -10,15 +11,16 @@ export default function Header() {
 
    return (
       <header>
-         <h1>FlatFlix</h1>
-         <p>Design Logo Here</p>
+         <img id="logo" src="https://i.imgur.com/QBArIxc.png" alt="Flatflix logo"/>
          <nav>
             <Button
                ref={ref}
                aria-controls="simple-menu"
                aria-haspopup="true"
                onClick={() => setIsOpen(true)}>
-               Open Menu
+               <Icon>
+                  <MenuIcon/>
+               </Icon>
             </Button>
             <Menu
                id="simple-menu"

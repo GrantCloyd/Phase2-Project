@@ -31,6 +31,7 @@ export default function Thumbnail({
             <CardContent>
                <Link to={`/${pathname}`}>
                   <img
+                     className="showImage"
                      alt={name}
                      src={
                         image !== null

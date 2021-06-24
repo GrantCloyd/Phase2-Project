@@ -1,11 +1,19 @@
 body {
-   margin: 0 auto;
-   text-align: Center;
-   width: 50%;
+   margin: auto;
    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
       "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
+   background: rgb(85, 196, 181);
+   /* 27, 66, 124 */
+}
+
+#root {
+   margin: 0 auto;
+   text-align: Center;
+   width: 50%;
+   background: white;
+   border: 20px solid white;
 }
 
 code {
@@ -16,13 +24,69 @@ li {
    list-style: none;
 }
 
-img {
+
+
+.showImage {
    width: 200px;
    height: 300px;
+   border-radius: 10px;
+}
+
+#logo {
+   height: 180px;
+   width: 100%;
+   object-fit: cover;
+   /* border-bottom: 5px solid white; */
+}
+
+#footerSection {
+   height: 75px;
+   width: 100%;
+   /* object-position: 50% 0%;
+   object-fit: cover; */
+   background-image: url("https://i.imgur.com/QBArIxc.png");
+}
+
+#footerSection h3 {
+   font-size: 20px;
+   color: white;
 }
 
 .name {
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
+}
+
+.userReviews {
+   background: rgb(241, 239, 239);
+   border: 10px solid white;
+}
+
+.titleRating {
+   float: left;
+   margin-left: 25px;
+   font-size: 16px;
+}
+
+.span {
+   text-align: center;
+}
+
+.span h4 {
+   text-decoration: underline;
+   font-size: 17px;
+}
+
+.span p {
+   font-size: 14px;
+}
+
+/* .MuiButtonBase-root, .MuiButton-root, .MuiButton-contained, .MuiButton-containedPrimary {
+
+} */
+
+.MuiButtonBase-root.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
+   background-color: rgb(248, 191, 69);
+   color: black;
 }

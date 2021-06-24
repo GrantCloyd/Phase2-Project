@@ -2,11 +2,10 @@ import React from "react"
 
 export default function Footer() {
    return (
-      <div>
+      <div id="footerSection">
          <hr />
-         <h3>Contact</h3>
-         <h3>About</h3>
-         <h3>Fancy Logo</h3>
+         <h3>Contact &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;About</h3>
+         {/* <img id="footer" src="https://i.imgur.com/QBArIxc.png" alt="Flatflix logo"/> */}
       </div>
    )
 }

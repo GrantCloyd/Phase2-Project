@@ -5,11 +5,11 @@ import Featured from "./Featured"
 export default function LandingPage() {
    return (
       <div>
-         <h2>Welcome!</h2>
+         {/* <h2>Welcome!</h2> */}
          <Featured />
-         <h4>Recently viewed shows</h4>
+         {/* <h2>Recently viewed shows</h2>
          <p>Recently viewed item</p>
-         <p>Recently viewed item</p>
+         <p>Recently viewed item</p> */}
       </div>
    )
 }
