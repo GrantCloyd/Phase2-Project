@@ -42,7 +42,7 @@ export default function DiscoverPage() {
          </form>
          <br />
          <Grid container spacing={3}>
-            {discoverArray.length !== 0 ? discoverArray : <h3>No result found</h3>}
+            {discoverArray.length !== 0 ? discoverArray : <h3 className="no-results">No result found</h3>}
          </Grid>
       </div>
    )
