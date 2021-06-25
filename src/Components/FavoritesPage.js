@@ -150,6 +150,6 @@ export default function FavoritesPage() {
             Your average show's critical rating :{" "}
             {averageRatingArr.length !== 0 ? "⭐️ " + averageRatingArr.toFixed(1) : null}
          </h4>
-      </div>  
+      </div>
    )
 }

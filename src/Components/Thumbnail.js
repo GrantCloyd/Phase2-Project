@@ -6,14 +6,10 @@ import { Button, Card, CardContent, Grid } from "@material-ui/core"
 export default function Thumbnail({
    item: { externals, name, image, genres, rating, runtime, summary },
    item,
-   // favorites,
-   // handleFavorite,
 }) {
    let pathname = ""
 
    const { favorites, handleFavorite } = useContext(Context)
-
-   // console.log(context)
 
    let favoriteStatus = favorites.find(favorite => favorite.id === item.id) === undefined
 

@@ -24,8 +24,6 @@ li {
    list-style: none;
 }
 
-
-
 .showImage {
    width: 200px;
    height: 300px;
@@ -40,6 +38,8 @@ li {
 }
 
 #footerSection {
+   margin-top: 20px;
+   padding-top: 20px;
    height: 100px;
    width: 100%;
    /* object-position: 50% 0%;
@@ -94,6 +94,10 @@ li {
 }
 
 .summary {
-   width: 80%; 
+   width: 80%;
    margin: auto;
+}
+
+#footerSection .footerButton {
+   margin: 0 60px;
 }

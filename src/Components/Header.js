@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react"
 //for use with Links
 import { NavLink, useHistory } from "react-router-dom"
 import { Icon, Menu, MenuItem, Button } from "@material-ui/core"
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from "@material-ui/icons/Menu"
 
 export default function Header() {
    const [isOpen, setIsOpen] = useState(false)
@@ -13,7 +13,12 @@ export default function Header() {
 
    return (
       <header>
-         <img id="logo" onClick={() => headerHistory.push("/")} src="https://i.imgur.com/QBArIxc.png" alt="Flatflix logo"/>
+         <img
+            id="logo"
+            onClick={() => headerHistory.push("/")}
+            src="https://i.imgur.com/QBArIxc.png"
+            alt="Flatflix logo"
+         />
          <nav>
             <Button
                ref={ref}
@@ -21,7 +26,7 @@ export default function Header() {
                aria-haspopup="true"
                onClick={() => setIsOpen(true)}>
                <Icon>
-                  <MenuIcon/>
+                  <MenuIcon />
                </Icon>
             </Button>
             <Menu

@@ -19,7 +19,7 @@ export default function ShowPage() {
    const initialReview = {
       rating: "0",
       reviewTitle: "",
-      comment: ""
+      comment: "",
    }
 
    const { handleFavorite, favorites } = useContext(Context)
@@ -137,12 +137,12 @@ export default function ShowPage() {
             })
       }
 
-      setUserReview(initialReview);
+      setUserReview(initialReview)
    }
 
    let { name, image, rating, runtime, summary, genres } = show
 
-   const genresArray = <h4>{genres.join(", ")}</h4>;
+   const genresArray = <h4>{genres.join(", ")}</h4>
 
    let favoriteStatus = favorites.find(favorite => favorite.id === show.id) === undefined
 
@@ -183,7 +183,7 @@ export default function ShowPage() {
             {rating.average ? (
                <p>
                   <strong>Critic Rating: </strong>
-                  ⭐️ &nbsp;{rating.average} 
+                  ⭐️ &nbsp;{rating.average}
                </p>
             ) : null}
             <p>
@@ -205,7 +205,7 @@ export default function ShowPage() {
          {page}
          <h3>User Reviews</h3>
          {reviewsArray}
-         <hr/>
+         <hr />
          <h4>Leave review</h4>
          <form id="review" onSubmit={handleSubmitReview}>
             <FormControl>
