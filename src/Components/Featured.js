@@ -19,31 +19,20 @@ export default function Featured() {
       ("0" + myDate.getDate()).slice(-2)
 
    let featuredArray = featured
-      .filter(featureShow => {
+      .filter((featureShow, index) => {
          if (featureShow._embedded.show.name !== null) {
-            return (
-               featured.filter(
-                  showItem => showItem._embedded.show.name === featureShow._embedded.show.name
-               ).length === 1
-            )
-            // } else if (featureShow._embedded.show.externals.tvrage !== null) {
-            //    return (
-            //       featured.filter(
-            //          showItem =>
-            //             showItem._embedded.show.externals.tvrage ===
-            //             featureShow._embedded.show.externals.tvrage
-            //       ).length === 1
-            //    )
-            // } else if (featureShow._embedded.show.externals.imdb !== null) {
-            //    return (
-            //       featured.filter(
-            //          showItem =>
-            //             showItem._embedded.show.externals.imdb ===
-            //             featureShow._embedded.show.externals.imdb
-            //       ).length === 1
-            //    )
+            let findIndex = -1;
+
+            for (let i = 0; i < featured.length; i++) {
+               if (featureShow._embedded.show.name === featured[i]._embedded.show.name) {
+                  findIndex = i;
+                  break;
+               }
+            }
+
+            return findIndex === index;
          }
-         return true
+         return true;
       })
 
       .map(featureItem => {

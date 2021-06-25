@@ -84,9 +84,6 @@ li {
    font-size: 14px;
 }
 
-/* .MuiButtonBase-root, .MuiButton-root, .MuiButton-contained, .MuiButton-containedPrimary {
-
-} */
 
 .MuiButtonBase-root.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
    background-color: rgb(248, 191, 69);
@@ -100,4 +97,6 @@ li {
 
 #footerSection .footerButton {
    margin: 0 60px;
+   font-size: 16px;
+   font-weight: bold;
 }
