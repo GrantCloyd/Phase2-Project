@@ -1,5 +1,5 @@
-# An app for looking up TVs using TVMaze's API
+# //FlatFlix, an app for discovering new TV shows
 
-Additional resources/dependencies include recharts, nanoid, material-ui's core components/icons, and react-router
+Resources/dependencies include recharts, nanoid, material-ui's core components/icons, react-router and TVMaze's API
 
 Created as part of Phase 2 project week at //Flatiron - DC by Anthony Chung and Grant Cloyd
