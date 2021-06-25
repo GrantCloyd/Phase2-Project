@@ -49,7 +49,7 @@ export default function Featured() {
 
    return (
       <div>
-         <h2>Featured Today</h2>
+         <h3>Featured Today</h3>
          <Grid container spacing={3}>
             {featuredArray}
          </Grid>

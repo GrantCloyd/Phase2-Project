@@ -4,9 +4,8 @@ import Review from "./Review"
 import { Context } from "../context/Context"
 import { nanoid } from "nanoid"
 import { Button, Input, InputLabel, TextField, FormControl } from "@material-ui/core"
-// import { withStyles } from '@material-ui/core/styles';
 
-export default function ShowPage() {
+function ShowPage({ setViewed }) {
    const initialShow = {
       name: "",
       image: "",
@@ -14,37 +13,50 @@ export default function ShowPage() {
       runtime: "",
       summary: "",
       genres: [],
-   }
+   };
 
    const initialReview = {
       rating: "0",
       reviewTitle: "",
       comment: "",
-   }
+   };
 
-   const { handleFavorite, favorites } = useContext(Context)
+   const { handleFavorite, favorites } = useContext(Context);
 
-   const [reviews, setReviews] = useState([])
+   const [reviews, setReviews] = useState([]);
 
-   const [userReview, setUserReview] = useState(initialReview)
+   const [userReview, setUserReview] = useState(initialReview);
 
-   let reviewsArray = ""
+   let reviewsArray = "";
 
    if (reviews) {
       reviewsArray = reviews.map(review => {
          return <Review key={review.id} {...review} />
       })
-   }
+   };
 
-   const [show, setShow] = useState(initialShow)
+   const [show, setShow] = useState(initialShow);
 
-   const showId = useParams().id
+   const showId = useParams().id;
 
-   const history = useHistory()
+   const history = useHistory();
 
    const handleBackButton = () => {
-      history.goBack()
-   }
+      history.goBack();
+   };
+
+   const handleViewed = () => {
+      let viewedHistory = [...JSON.parse(localStorage.getItem("viewed"))]  ;
+
+      if (show !== initialShow && (viewedHistory.length === 0 || viewedHistory.find(historyItem => historyItem.id === show.id) === undefined)) {
+         if (viewedHistory.length >= 3) {
+            viewedHistory.shift();
+         }
+         viewedHistory.push(show);
+         setViewed(viewedHistory)
+         localStorage.setItem("viewed", JSON.stringify(viewedHistory));
+      }
+   };
 
    useEffect(() => {
       fetch(`http://api.tvmaze.com/lookup/shows?thetvdb=${showId}`)
@@ -72,7 +84,7 @@ export default function ShowPage() {
 
             setShow(data)
          })
-   }, [showId, setShow])
+   }, [showId]);
 
    useEffect(() => {
       fetch(`http://localhost:3001/reviews/${showId}`)
@@ -82,19 +94,7 @@ export default function ShowPage() {
          })
    }, [showId, setReviews])
 
-   // useEffect(() => {
-   //    let viewedHistory = [...localStorage.getItem("viewed")];
-
-   //    console.log(viewedHistory);
-
-   //    if (show !== initialShow && (viewedHistory.length === 0 || viewedHistory.find(historyItem => historyItem === show) !== show)) {
-   //       console.log(show);
-   //       viewedHistory.push({hi: "hi"});
-   //       localStorage.setItem("viewed", viewedHistory);
-   //    }
-
-   //    console.log(2, viewedHistory)
-   // }, [show])
+   useEffect(() => handleViewed(), [show]);
 
    const handleSubmitReview = e => {
       e.preventDefault()
@@ -250,3 +250,5 @@ export default function ShowPage() {
       </div>
    )
 }
+
+export default ShowPage;
