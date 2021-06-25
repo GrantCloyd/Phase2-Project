@@ -16,6 +16,7 @@ export default function LandingPage({ viewed }) {
          <Grid container spacing={3}>
             {historyArray}
          </Grid>
+         {recentHistory.length > 0 ? <br/> : null}
          <Featured />
       </div>
    )
