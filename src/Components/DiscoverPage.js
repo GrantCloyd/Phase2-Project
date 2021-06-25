@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Thumbnail from "./Thumbnail"
 import { Grid } from "@material-ui/core"
+import { useHistory } from "react-router-dom"
 
 //useEffect that gets initial data of some specified type that renders first set of Lis
 //subsequent searches will change intitial LIs to searched for Lis
@@ -8,6 +9,7 @@ import { Grid } from "@material-ui/core"
 export default function DiscoverPage() {
    const [shows, setShows] = useState([])
    const [querySearch, setQuerySearch] = useState("")
+   const history = useHistory()
 
    let discoverArray = shows.map(discoverItem => {
       return <Thumbnail key={discoverItem.show.id} item={discoverItem.show} />
@@ -31,7 +33,8 @@ export default function DiscoverPage() {
          <form
             onSubmit={e => {
                e.preventDefault()
-               getData(querySearch)
+               history.push(`/discover/search/${querySearch}`)
+               // getData(querySearch)
             }}>
             <span>Search: </span>
             <input onChange={e => setQuerySearch(e.target.value)} type="text" value={querySearch} />

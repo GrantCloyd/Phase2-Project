@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react"
 //for use with Links
-import { NavLink, useHistory } from "react-router-dom"
+import { NavLink, useHistory, Link } from "react-router-dom"
 import { Icon, Menu, MenuItem, Button } from "@material-ui/core"
 import MenuIcon from "@material-ui/icons/Menu"
 
@@ -13,12 +13,14 @@ export default function Header() {
 
    return (
       <header>
-         <img
-            id="logo"
-            onClick={() => headerHistory.push("/")}
-            src="https://i.imgur.com/QBArIxc.png"
-            alt="Flatflix logo"
-         />
+         <Link to="/">
+            <img
+               id="logo"
+               onClick={() => headerHistory.push("/")}
+               src="https://i.imgur.com/QBArIxc.png"
+               alt="Flatflix logo"
+            />{" "}
+         </Link>
          <nav>
             <Button
                ref={ref}
